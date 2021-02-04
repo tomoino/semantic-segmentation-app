@@ -3,13 +3,11 @@ FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 
 ARG USERNAME=duser
 ENV DEBIAN_FRONTEND=noninteractive
-# ENV LC_ALL=C.UTF-8
-# ENV LANG=C.UTF-8
 
 # apt-get
 RUN apt-get update -qq && \
 		apt-get install -y \
-			curl git sudo tree vim wget build-essential software-properties-common && \
+			curl git sudo tree vim wget build-essential software-properties-common unzip && \
 		apt-get install -y \
 			python3 python3-pip libopencv-dev libsm6 libxext6 libxrender-dev && \
         apt-add-repository ppa:fish-shell/release-3 && \
@@ -51,10 +49,10 @@ RUN addgroup --gid $GROUP_ID $USERNAME && \
 USER $USERNAME
 
 #dotfiles
-# ENV DOTFILES_PATH /home/${USERNAME}/dotfiles
-# RUN git clone https://github.com/tomoino/dotfiles.git $DOTFILES_PATH
-# RUN chown -R ${USERNAME}:${USERNAME} $DOTFILES_PATH \
-#   && sudo -u ${USERNAME} -i $DOTFILES_PATH/init_docker.fish
+ENV DOTFILES_PATH /home/${USERNAME}/dotfiles
+RUN git clone https://github.com/tomoino/dotfiles.git $DOTFILES_PATH
+RUN chown -R ${USERNAME}:${USERNAME} $DOTFILES_PATH \
+  && sudo sh $DOTFILES_PATH/init_docker.sh
 
 # 各種命令を実行するカレントディレクトリを指定
-WORKDIR $WORK_PATH
+WORKDIR /workspace
