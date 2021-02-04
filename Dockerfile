@@ -19,6 +19,8 @@ RUN pip3 install torchsummary
 # RUN pip3 install opencv-python
 
 RUN pip3 install streamlit
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
 # duser setting
 ARG USER_ID
