@@ -1,0 +1,43 @@
+### Configs ###
+
+# Data Configs
+data:
+  dataroot: 
+    train: ./data/sample/images/
+    val: ./data/sample/images/
+    test: ./data/sample/images/
+  labelpath: 
+    train: ./data/sample/labels/train.csv
+    val: ./data/sample/labels/test.csv
+    test: ./data/sample/labels/test.csv
+  img_size: [32, 32]
+  n_channels: 3
+  # classes: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
+  color_mean: [0.4914, 0.4822, 0.4465]
+  color_std: [0.2023, 0.1994, 0.2010]
+
+# Training Configs
+train:
+  batch_size: 8
+  epochs: 30
+  optimizer:
+    type: sgd
+    lr: 0.001
+    momentum: 0.9
+    decay: 0.0001
+  criterion:
+    type: cross_entropy
+  n_gpus: 1
+  save_ckpt_interval: 10
+
+# Model Configs
+model:
+  name: fcn_resnet50
+  n_classes: 21
+  pretrained: False
+  resume: 
+    # e.g) resume: ./logs/2020-07-26T00:19:34.918002/ckpt/best_acc_ckpt.pth if resume. Blank if not resume
+
+# Other Configs
+util:
+  logdir: ./logs/
