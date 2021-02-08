@@ -3,19 +3,44 @@
 # Data Configs
 data:
   dataroot: 
-    train: ./data/sample/images/
-    val: ./data/sample/images/
-    test: ./data/sample/images/
-  labelpath: 
-    train: ./data/sample/labels/train.csv
-    val: ./data/sample/labels/test.csv
-    test: ./data/sample/labels/test.csv
+    train: ./data/VOCdevkit/VOC2012/JPEGImages
+    val: ./data/VOCdevkit/VOC2012/JPEGImages
+    test: ./data/VOCdevkit/VOC2012/JPEGImages
+  annotationroot: 
+    train: ./data/VOCdevkit/VOC2012/SegmentationClass
+    val: ./data/VOCdevkit/VOC2012/SegmentationClass
+    test: ./data/VOCdevkit/VOC2012/SegmentationClass
+  annotationpath: 
+    train: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/train.txt
+    val: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/trainval.txt
+    test: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/test.txt
   img_size: [32, 32]
   n_channels: 3
   # classes: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
   color_mean: [0.4914, 0.4822, 0.4465]
   color_std: [0.2023, 0.1994, 0.2010]
-
+  label_color_map:  [[0, 0, 0],
+                        [128, 0, 0],
+                        [0, 128, 0],
+                        [128, 128, 0],
+                        [0, 0, 128],
+                        [128, 0, 128],
+                        [0, 128, 128],
+                        [128, 128, 128],
+                        [64, 0, 0],
+                        [192, 0, 0],
+                        [64, 128, 0],
+                        [192, 128, 0],
+                        [64, 0, 128],
+                        [192, 0, 128],
+                        [64, 128, 128],
+                        [192, 128, 128],
+                        [0, 64, 0],
+                        [128, 64, 0],
+                        [0, 192, 0],
+                        [128, 192, 0],
+                        [0, 64, 128],
+                        ]
 # Training Configs
 train:
   batch_size: 8
@@ -40,4 +65,4 @@ model:
 
 # Other Configs
 util:
-  logdir: ./logs/
+  logdir: ./result/logs/
