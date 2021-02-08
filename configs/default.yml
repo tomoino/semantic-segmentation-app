@@ -13,7 +13,7 @@ data:
   annotationpath: 
     train: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/train.txt
     val: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/trainval.txt
-    test: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/test.txt
+    test: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt
   img_size: [32, 32]
   n_channels: 3
   # classes: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
@@ -64,4 +64,4 @@ model:
 
 # Other Configs
 util:
-  logdir: ./result/logs/
+  logdir: ./logs/

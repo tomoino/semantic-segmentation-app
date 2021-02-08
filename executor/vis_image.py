@@ -1,3 +1,6 @@
+import numpy as np
+from PIL import Image
+
 class VisImage(object):
     def __init__(self, n_classes, label_color_map):
 

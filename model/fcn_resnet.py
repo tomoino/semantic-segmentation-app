@@ -120,7 +120,7 @@ class FCNResNet(BaseModel):
             'ckpt_dir': self.paths.ckpt_dir,
             'summary_dir': self.paths.summary_dir,
             'img_size': self.config.data.img_size,
-            'vis_image': VisImage(n_classes=self.n_classes, label_color_map=self.config.data.label_color_map),
+            'vis_img': VisImage(n_classes=self.n_classes, label_color_map=self.config.data.label_color_map),
             'img_outdir': self.paths.img_outdir,
         }
 
@@ -128,23 +128,27 @@ class FCNResNet(BaseModel):
         trainer.train()
 
     def evaluate(self):
-        pass
-    #     """Predicts resuts for the test dataset"""
-    #     LOG.info('\n Prediction started...')
-    #     self._set_training_parameters()
+        print('test')
 
-    #     eval_parameters = {
-    #         'device': self.device,
-    #         'model': self.model,
-    #         'dataloaders': (self.trainloader, self.testloader),
-    #         'epochs': None,
-    #         'optimizer': self.optimizer,
-    #         'criterion': self.criterion,
-    #         'metrics': self.metric,
-    #         'save_ckpt_interval': None,
-    #         'ckpt_dir': self.paths.ckpt_dir,
-    #         'summary_dir': self.paths.summary_dir,
-    #     }
+        """Predicts resuts for the test dataset"""
+        LOG.info('\n Prediction started...')
+        self._set_training_parameters()
 
-    #     trainer = Trainer(**eval_parameters)
-    #     trainer.eval()
+        eval_parameters = {
+            'device': self.device,
+            'model': self.model,
+            'dataloaders': (self.trainloader, self.testloader),
+            'epochs': None,
+            'optimizer': self.optimizer,
+            'criterion': self.criterion,
+            'metrics': self.metric,
+            'save_ckpt_interval': None,
+            'ckpt_dir': self.paths.ckpt_dir,
+            'summary_dir': self.paths.summary_dir,
+            'img_size': self.config.data.img_size,
+            'vis_img': VisImage(n_classes=self.n_classes, label_color_map=self.config.data.label_color_map),
+            'img_outdir': self.paths.img_outdir,
+        }
+
+        trainer = Trainer(**eval_parameters)
+        trainer.eval(epoch=0, inference=True)

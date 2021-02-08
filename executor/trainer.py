@@ -1,5 +1,5 @@
 """Trainer Class"""
-# from pathlib import Path
+from pathlib import Path
 from tqdm import tqdm
 from collections import OrderedDict
 
@@ -9,6 +9,8 @@ from tensorboardX import SummaryWriter
 
 from utils.logger import get_logger
 LOG = get_logger(__name__)
+
+from PIL import Image
 
 class Trainer:
 
@@ -24,7 +26,7 @@ class Trainer:
         self.ckpt_dir = kwargs['ckpt_dir']
         self.writer = SummaryWriter(str(kwargs['summary_dir']))
         self.img_size = kwargs['img_size']
-        self.vis_image = kwargs['vis_image']
+        self.vis_img = kwargs['vis_img']
         self.img_outdir = kwargs['img_outdir']
 
     def train(self):
@@ -146,3 +148,27 @@ class Trainer:
             'optimizer_state_dict': self.optimizer.state_dict(),
             'loss': loss,
         }, ckpt_path)
+
+    def _save_images(self, img_paths, preds):
+        """Save Image
+        Parameters
+        ----------
+        img_paths : list
+            original image paths
+        preds : tensor
+            [1, 21, img_size, img_size] ([mini-batch, n_classes, height, width])
+        """
+
+        for i, img_path in enumerate(img_paths):
+            # preds[i] has background label 0, so exclude background class
+            pred = preds[i]
+
+            annotated_img = self.vis_img.decode_segmap(pred)
+
+            width = Image.open(img_path).size[0]
+            height = Image.open(img_path).size[1]
+
+            annotated_img = annotated_img.resize((width, height), Image.NEAREST)
+
+            outpath = self.img_outdir / Path(img_path).name
+            self.vis_img.save_img(annotated_img, outpath)
