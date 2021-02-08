@@ -2,7 +2,7 @@
 from typing import Dict
 
 # import torch.nn as nn
-# import torchvision.models as models
+import torchvision.models as models
 
 from utils.paths import Paths
 from utils.logger import setup_logger, get_logger
@@ -67,35 +67,21 @@ class FCNResNet(BaseModel):
         setup_logger(str(self.paths.logdir / 'info.log'))
 
     def build(self):
-        pass
-    #     """ Builds model """
-    #     LOG.info(f'\n Building {self.model_name.upper()}...')
-    #     pretrained = self.config.model.pretrained
+        """ Builds model """
+        LOG.info(f'\n Building {self.model_name.upper()}...')
+        pretrained = self.config.model.pretrained
 
-    #     if self.model_name == 'resnet18':
-    #         self.model = models.resnet18(pretrained=pretrained)
-    #         self.model.fc = nn.Linear(in_features=512, out_features=self.n_classes, bias=True)
-    #     elif self.model_name == 'resnet34':
-    #         self.model = models.resnet34(pretrained=pretrained)
-    #         self.model.fc = nn.Linear(in_features=512, out_features=self.n_classes, bias=True)
-    #     elif self.model_name == 'resnet50':
-    #         self.model = models.resnet50(pretrained=pretrained)
-    #         self.model.fc = nn.Linear(in_features=2048, out_features=self.n_classes, bias=True)
-    #     elif self.model_name == 'resnet101':
-    #         self.model = models.resnet101(pretrained=pretrained)
-    #         self.model.fc = nn.Linear(in_features=2048, out_features=self.n_classes, bias=True)
-    #     elif self.model_name == 'resnet152':
-    #         self.model = models.resnet152(pretrained=pretrained)
-    #         self.model.fc = nn.Linear(in_features=2048, out_features=self.n_classes, bias=True)
-    #     else:
-    #         raise ValueError('This model name is not supported.')
+        if self.model_name == 'fcn_resnet50':
+            self.model = models.segmentation.fcn_resnet50(pretrained=pretrained, num_classes=self.n_classes)
+        else:
+            raise ValueError('This model name is not supported.')
 
-    #     # Load checkpoint
-    #     if self.resume:
-    #         ckpt = load_ckpt(self.resume)
-    #         self.model.load_state_dict(ckpt['model_state_dict'])
+        # Load checkpoint
+        if self.resume:
+            ckpt = load_ckpt(self.resume)
+            self.model.load_state_dict(ckpt['model_state_dict'])
 
-    #     LOG.info(' Model was successfully build.')
+        LOG.info(' Model was successfully build.')
 
     # def _set_training_parameters(self):
     #     """Sets training parameters"""
