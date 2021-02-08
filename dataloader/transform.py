@@ -64,7 +64,7 @@ class DataTransform():
                 Resize(resize),
                 Normalize_Tensor(color_mean, color_std)
             ])
-        elif mode == 'test':
+        elif mode == 'eval':
             self.data_transform = Compose([
                 Resize(resize),
                 Normalize_Tensor(color_mean, color_std)

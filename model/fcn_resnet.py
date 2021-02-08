@@ -7,14 +7,16 @@ import torchvision.models as models
 from utils.paths import Paths
 from utils.logger import setup_logger, get_logger
 from dataloader import DataLoader
-# from metric import Metric
-# from executor.trainer import Trainer
+from metric.metric import Metric
+from executor.trainer import Trainer
 
 from .base_model import BaseModel
-# from .common.device import setup_device, data_parallel
-# from .common.criterion import make_criterion
-# from .common.optimizer import make_optimizer
-# from .common.ckpt import load_ckpt
+from .common.device import setup_device, data_parallel
+from .common.criterion import make_criterion
+from .common.optimizer import make_optimizer
+from .common.ckpt import load_ckpt
+
+from executor.vis_image import VisImage
 
 LOG = get_logger(__name__)
 
@@ -33,7 +35,7 @@ class FCNResNet(BaseModel):
 
         # dataloader
         self.trainloader = None
-        # self.valloader = None
+        self.valloader = None
         self.testloader = None
 
         self.paths = None
@@ -83,45 +85,47 @@ class FCNResNet(BaseModel):
 
         LOG.info(' Model was successfully build.')
 
-    # def _set_training_parameters(self):
-    #     """Sets training parameters"""
-    #     self.epochs = self.config.train.epochs
-    #     self.save_ckpt_interval = self.config.train.save_ckpt_interval
+    def _set_training_parameters(self):
+        """Sets training parameters"""
+        self.epochs = self.config.train.epochs
+        self.save_ckpt_interval = self.config.train.save_ckpt_interval
 
-    #     # CPU or GPU(single, multi)
-    #     self.device = setup_device(self.n_gpus)
-    #     self.model = self.model.to(self.device)
-    #     if self.n_gpus >= 2:
-    #         self.model = data_parallel(self.model)
+        # CPU or GPU(single, multi)
+        self.device = setup_device(self.n_gpus)
+        self.model = self.model.to(self.device)
+        if self.n_gpus >= 2:
+            self.model = data_parallel(self.model)
 
-    #     # optimizer and criterion
-    #     self.optimizer = make_optimizer(self.model, self.config.train.optimizer)
-    #     self.criterion = make_criterion(self.config.train.criterion)
+        # optimizer and criterion
+        self.optimizer = make_optimizer(self.model, self.config.train.optimizer)
+        self.criterion = make_criterion(self.config.train.criterion)
 
-    #     # metric
-    #     self.metric = Metric(self.n_classes, self.classes, self.paths.metric_dir)
+        # metric
+        self.metric = Metric(self.n_classes, self.paths.metric_dir)
 
     def train(self):
-        pass
-    #     """Compiles and trains the model"""
-    #     LOG.info('\n Training started.')
-    #     self._set_training_parameters()
+        """Compiles and trains the model"""
+        LOG.info('\n Training started.')
+        self._set_training_parameters()
         
-    #     train_parameters = {
-    #         'device': self.device,
-    #         'model': self.model,
-    #         'dataloaders': (self.trainloader, self.valloader),
-    #         'epochs': self.epochs,
-    #         'optimizer': self.optimizer,
-    #         'criterion': self.criterion,
-    #         'metrics': self.metric,
-    #         'save_ckpt_interval': self.save_ckpt_interval,
-    #         'ckpt_dir': self.paths.ckpt_dir,
-    #         'summary_dir': self.paths.summary_dir,
-    #     }
+        train_parameters = {
+            'device': self.device,
+            'model': self.model,
+            'dataloaders': (self.trainloader, self.valloader),
+            'epochs': self.epochs,
+            'optimizer': self.optimizer,
+            'criterion': self.criterion,
+            'metrics': self.metric,
+            'save_ckpt_interval': self.save_ckpt_interval,
+            'ckpt_dir': self.paths.ckpt_dir,
+            'summary_dir': self.paths.summary_dir,
+            'img_size': self.config.data.img_size,
+            'vis_image': VisImage(n_classes=self.n_classes, label_color_map=self.config.data.label_color_map),
+            'img_outdir': self.paths.img_outdir,
+        }
 
-    #     trainer = Trainer(**train_parameters)
-    #     trainer.train()
+        trainer = Trainer(**train_parameters)
+        trainer.train()
 
     def evaluate(self):
         pass

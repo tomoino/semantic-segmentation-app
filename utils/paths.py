@@ -5,11 +5,12 @@ from pathlib import Path
 class Paths:
     """Paths class which contains logidr, summary_dir, ckpt_dir, metric_dir"""
     
-    def __init__(self, logdir, summary_dir, ckpt_dir, metric_dir):
+    def __init__(self, logdir, summary_dir, ckpt_dir, metric_dir, img_outdir):
         self.logdir = logdir
         self.summary_dir = summary_dir
         self.ckpt_dir = ckpt_dir
         self.metric_dir = metric_dir
+        self.img_outdir = img_outdir
     
     @classmethod
     def make_dirs(cls, logdir: str) -> object:
@@ -41,4 +42,8 @@ class Paths:
         metric_dir = logdir / 'metric'
         metric_dir.mkdir(exist_ok=True)
 
-        return cls(logdir, summary_dir, ckpt_dir, metric_dir)
+        # img directory
+        img_outdir = logdir / 'imgs'
+        img_outdir.mkdir(exist_ok=True)
+
+        return cls(logdir, summary_dir, ckpt_dir, metric_dir, img_outdir)
