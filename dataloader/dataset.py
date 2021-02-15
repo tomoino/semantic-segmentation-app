@@ -1,7 +1,7 @@
-# from pathlib import Path
 import torch.utils.data as data
 from PIL import Image
 import numpy as np
+
 # Datasetクラス
 class Dataset(data.Dataset):
     def __init__(self, img_list, anno_list, transform, label_color_map):

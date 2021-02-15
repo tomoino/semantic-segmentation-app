@@ -2,3 +2,4 @@ data
 result
 __pycache__
 logs
+torch_semantic_segmentation.egg-info

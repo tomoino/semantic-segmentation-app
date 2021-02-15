@@ -18,13 +18,13 @@ class DataLoader:
         dataroot : str
             path to the image data directory e.g. './data/images/'
         annotationroot : str
-            a path to the annotation directory
+            a path to the annotated image data directory e.g. './data/images/'
         annotationpath : str
             path to the annotation text e.g. './data/annotation/train.txt'
         Returns
         -------
         Tuple of list
-            img_list: e.g. ['./data/images/car1.png', './data/images/dog4.png', ...]
+            img_list: e.g. ['./data/images/car1.jpg', './data/images/dog4.jpg', ...]
             annot_list:  e.g. ['./data/images/car1.png', './data/images/dog4.png', ...]
         """
         img_list, annot_list = make_data_list(dataroot, annotationroot, annotationpath)

@@ -16,7 +16,6 @@ data:
     test: ./data/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt
   img_size: [32, 32]
   n_channels: 3
-  # classes: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
   color_mean: [0.4914, 0.4822, 0.4465]
   color_std: [0.2023, 0.1994, 0.2010]
   label_color_map:  [[0, 0, 0],
@@ -44,7 +43,7 @@ data:
 # Training Configs
 train:
   batch_size: 8
-  epochs: 1 # 50
+  epochs: 50
   optimizer:
     type: adam
     lr: 0.0001

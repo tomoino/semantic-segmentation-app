@@ -1,4 +1,3 @@
-
 import yaml
 
 def load_yaml(cfg_path: str) -> dict:

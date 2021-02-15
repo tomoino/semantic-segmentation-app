@@ -1,8 +1,6 @@
 """Abstract base model"""
 from typing import Dict
-
 from abc import ABC, abstractmethod
-
 from utils.config import Config
 
 class BaseModel(ABC):

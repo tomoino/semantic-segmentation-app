@@ -1,7 +1,5 @@
 # """ResNet model"""
 from typing import Dict
-
-# import torch.nn as nn
 import torchvision.models as models
 
 from utils.paths import Paths
@@ -128,8 +126,6 @@ class FCNResNet(BaseModel):
         trainer.train()
 
     def evaluate(self):
-        print('test')
-
         """Predicts resuts for the test dataset"""
         LOG.info('\n Prediction started...')
         self._set_training_parameters()

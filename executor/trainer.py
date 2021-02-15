@@ -2,18 +2,15 @@
 from pathlib import Path
 from tqdm import tqdm
 from collections import OrderedDict
-
+from PIL import Image
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
-
 from utils.logger import get_logger
+
 LOG = get_logger(__name__)
 
-from PIL import Image
-
 class Trainer:
-
     def __init__(self, **kwargs):
         self.device = kwargs['device']
         self.model = kwargs['model']

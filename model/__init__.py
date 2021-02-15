@@ -1,9 +1,6 @@
 """Models"""
-
 from typing import Dict
-
 from configs.supported_model import SUPPORTED_MODEL
-
 from .fcn_resnet import FCNResNet
 
 def get_model(config: Dict) -> object:

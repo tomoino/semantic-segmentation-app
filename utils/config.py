@@ -1,6 +1,5 @@
 """Config class"""
 from typing import Dict
-
 import json
 
 class Config:
