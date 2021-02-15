@@ -4,15 +4,15 @@
 ```
 https://github.com/tomoino/semantic-segmentation-app.git
 ```
-1. Build docker image
+2. Build docker image
 ```
 sh docker/build.sh
 ```
-1. Run docker container
+3. Run docker container
 ```
 sh docker/run.sh
 ```
-1. Run setup.py
+4. Run setup.py
 ```
 python3 setup.py
 ```
