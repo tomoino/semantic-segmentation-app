@@ -66,8 +66,12 @@ class Inferrer:
             output = self.model.model(tensor_image)['out']
             pred = torch.softmax(output, 1).max(1)[1]
             pred = torch.cat([pred.cpu().detach().clone()], axis=0)
+            annotated_img = self._make_annotated_image(shape, pred)
             
-            return self._make_annotated_image(shape, pred)
+            # mask = Image.new("RGBA", shape[0], shape[1])
+            # image = Image.composite(image, annotated_img, mask)
+            result = Image.blend(image, annotated_img, 0.7)
+            return result
 
     def _make_annotated_image(self, shape, pred):
             annotated_img = self.vis_img.decode_segmap(pred[0])
