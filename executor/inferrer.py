@@ -77,7 +77,4 @@ class Inferrer:
 
             annotated_img = annotated_img.resize((width, height), Image.NEAREST)
 
-            outpath = self.config.util.logdir + '/res.jpg'
-            self.vis_img.save_img(annotated_img, outpath)
-
             return annotated_img
