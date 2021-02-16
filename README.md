@@ -2,7 +2,7 @@
 ## Setup
 1. Clone this repository
 ```
-https://github.com/tomoino/semantic-segmentation-app.git
+git clone https://github.com/tomoino/semantic-segmentation-app.git
 ```
 2. Build docker image
 ```
